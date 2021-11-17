@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "terraform-outsystems-database"
+    bucket = "terraform-state-os-database"
     prefix = "terraform/state/production"
   }
 }
