@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+govc sso.user.create -p "$(yq e .vsphere.password ${PARAMS_YAML})" "$(yq e .vsphere.username ${PARAMS_YAML})"
+govc sso.group.update -a $(yq e .vsphere.username ${PARAMS_YAML}) Administrators
