@@ -28,7 +28,7 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_folder" "folder" {
-  path          = local.vsphere_folder
+  path = local.vsphere_folder
 }
 
 resource "random_pet" "default_password" {

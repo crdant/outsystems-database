@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     carvel = {
-      source  = "vmware-tanzu/carvel"
+      source = "vmware-tanzu/carvel"
     }
   }
 }

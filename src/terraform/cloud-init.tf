@@ -11,7 +11,7 @@ data "http" "microsoft_list" {
 }
 
 data "local_file" "ssh_key" {
-  filename = var.ssh_key_file 
+  filename = var.ssh_key_file
 }
 
 data "carvel_ytt" "user_data" {
@@ -25,7 +25,7 @@ data "carvel_ytt" "user_data" {
     "microsoft.mssql_list" = data.http.sqlserver_list.body,
     "microsoft.prod_list"  = data.http.microsoft_list.body,
 
-    "ssh.authorized_keys.crdant"  = data.local_file.ssh_key.content
+    "ssh.authorized_keys.crdant" = data.local_file.ssh_key.content
   }
 
   ignore_unknown_comments = true
