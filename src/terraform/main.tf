@@ -35,6 +35,13 @@ resource "random_pet" "default_password" {
   length = 4
 }
 
+locals {
+  user_data = <<-DATA
+  #cloud-config
+  ${data.carvel_ytt.user_data.result}
+  DATA
+}
+
 resource "vsphere_virtual_machine" "vm" {
   name             = local.server_name
   datacenter_id    = data.vsphere_datacenter.datacenter.id
@@ -56,12 +63,19 @@ resource "vsphere_virtual_machine" "vm" {
   disk {
     label = "disk0"
     size  = var.disk
+
+    io_share_count = 1000
+  }
+
+  cdrom {
+    client_device = true
   }
 
   ovf_deploy {
-    remote_ovf_url    = var.image
-    disk_provisioning = "thin"
-    ip_protocol       = "IPV4"
+    remote_ovf_url       = var.image
+    disk_provisioning    = "thin"
+    ip_protocol          = "IPV4"
+    ip_allocation_policy = "DHCP"
 
     allow_unverified_ssl_cert = true
   }
@@ -70,7 +84,7 @@ resource "vsphere_virtual_machine" "vm" {
     properties = {
       "hostname"  = local.server_name
       "password"  = random_pet.default_password.id
-      "user-data" = base64encode(data.carvel_ytt.user_data.result)
+      "user-data" = base64encode(local.user_data)
     }
   }
 }

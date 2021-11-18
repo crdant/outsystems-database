@@ -19,6 +19,8 @@ data "carvel_ytt" "user_data" {
     "${var.project_root}/src/cloud-init"
   ]
   values = {
+    "domain" = var.domain
+
     "microsoft.pgp_key"    = data.http.microsoft_key.body,
     "microsoft.mssql_list" = data.http.sqlserver_list.body,
     "microsoft.prod_list"  = data.http.microsoft_list.body,

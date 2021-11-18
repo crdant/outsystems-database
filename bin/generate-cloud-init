@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-domain=${1}
+domain=$(yq e .domain ${PARAMS_YAML})
 
 echo "#cloud-config"
-ytt --ignore-unknown-comments -f ${PROJECT_DIR}/cloud-init --data-value domain=${domain} \
+ytt --ignore-unknown-comments -f ${PROJECT_DIR}/src/cloud-init --data-value domain=${domain} \
   --data-value microsoft.pgp_key="$(curl --silent https://packages.microsoft.com/keys/microsoft.asc)" \
   --data-value microsoft.mssql_list="$(curl --silent https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2019.list)" \
   --data-value microsoft.prod_list="$(curl --silent https://packages.microsoft.com/config/ubuntu/20.04/prod.list)" \
